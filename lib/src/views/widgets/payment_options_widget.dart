@@ -96,19 +96,16 @@ class UniPaymentOptionWidget extends StatelessWidget {
               10.hs,
 
               //* Payment provider logo
-              Visibility(
-                visible: !uniPayPaymentMethods.isTabby,
-                child: Image.asset(
-                  "${UniAssetsPath.images}/$image.png",
-                  fit: BoxFit.contain,
-                  width: uniPayPaymentMethods.isTamara
-                      ? 39.rSp
-                      : uniPayPaymentMethods.isTabby
-                          ? 55.rw
-                          : 100.rw,
-                  height: uniPayPaymentMethods.isTamara ? 39.rSp : 40.rh,
-                  package: UniAssetsPath.packageName,
-                ),
+              Image.asset(
+                "${UniAssetsPath.images}/$image.png",
+                fit: BoxFit.contain,
+                width: uniPayPaymentMethods.isTamara
+                    ? 39.rSp
+                    : uniPayPaymentMethods.isTabby
+                        ? 55.rw
+                        : 100.rw,
+                height: uniPayPaymentMethods.isTamara ? 39.rSp : 40.rh,
+                package: UniAssetsPath.packageName,
               )
             ],
           ),

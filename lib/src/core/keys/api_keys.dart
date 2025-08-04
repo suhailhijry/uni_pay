@@ -36,6 +36,7 @@ class ApiKeys {
       description: uniPayData.orderInfo.description,
       applePay: ApplePayConfig(
         manual: false,
+        saveCard: true,
         label: uniPayData.appName,
         merchantId: uniPayData.credentials.applePayMerchantIdentifier,
       ),

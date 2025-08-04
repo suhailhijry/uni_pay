@@ -18,6 +18,8 @@ import '../../../../core/controllers/uni_pay_controller.dart';
 import '../models/tabby_session.dart';
 import '../models/tabby_trxn.dart';
 import 'tabby_repo.dart';
+import 'package:tabby_flutter_inapp_sdk/src/resources/colors.dart';
+
 
 final _tabbyRepo = TabbyRepo();
 
@@ -26,17 +28,18 @@ final _tabbyRepo = TabbyRepo();
 /// Such as: Initiate tabby payment, create session, capture payment, get transaction details, etc.
 class UniTabbyServices {
   static TabbySDK? _tabbySdk;
+  static TabbyCredential? _tabbyCredential;
 
   /// Init Tabby SDK to prepare for payment
   static void initTabbySDK(UniPayData uniPayData) {
     if (uniPayData.credentials.paymentMethods.isTabbyGateway &&
         _tabbySdk == null) {
-      final tabbyCredentials = uniPayData.credentials.tabbyCredential!;
-      uniLog(tabbyCredentials.psKey);
+      _tabbyCredential = uniPayData.credentials.tabbyCredential!;
+      uniLog(_tabbyCredential!.psKey);
       _tabbySdk = TabbySDK();
       _tabbySdk?.setup(
-        withApiKey: tabbyCredentials.psKey,
-        environment: Environment.production,
+        withApiKey: _tabbyCredential!.psKey,
+        environment: Environment.staging,
       );
     }
   }
@@ -46,13 +49,12 @@ class UniTabbyServices {
   /// Please make sure you provided the required data
   static Widget showProductPageTabbySnippet(
       {required TabbySnippet tabbySnippet}) {
-    return TabbyPresentationSnippet(
-      price: tabbySnippet.totalAmountWithVat.formattedString,
+    return TabbyProductPageSnippet(
+      price: tabbySnippet.totalAmountWithVat.toDouble(),
       currency: tabbySnippet.currency.tabbyCurrency,
       lang: tabbySnippet.locale.tabbyLang,
-      textColor: tabbySnippet.textColor,
-      backgroundColor: tabbySnippet.backgroundColor,
-      borderColor: tabbySnippet.borderColor,
+      merchantCode: _tabbyCredential!.merchantCode,
+      apiKey: _tabbyCredential!.psKey,
     );
   }
 
@@ -135,6 +137,7 @@ class UniTabbyServices {
         paymentId: sessionResult.paymentId,
         availableProducts: sessionResult.availableProducts,
         status: SessionStatus.created,
+        rejectionReason: sessionResult.rejectionReason,
       );
       uniLog("✔ Tabby Session: ${session.toString()}");
       return session;
@@ -178,5 +181,233 @@ class UniTabbyServices {
   static Future<TabbyTransaction> captureTabbyPayment(
       {required TabbyDto tabbyDto}) {
     return _tabbyRepo.captureTabbyOrder(tabbyDto: tabbyDto);
+  }
+}
+
+class TabbyCheckoutSnippet extends StatefulWidget {
+  const TabbyCheckoutSnippet({
+    required this.currency,
+    required this.price,
+    required this.lang,
+    Key? key,
+  }) : super(key: key);
+
+  final String price;
+  final Currency currency;
+  final Lang lang;
+
+  @override
+  State<TabbyCheckoutSnippet> createState() => _TabbyCheckoutSnippetState();
+}
+
+const gap = SizedBox(height: 6);
+
+class _TabbyCheckoutSnippetState extends State<TabbyCheckoutSnippet> {
+  late List<String> localeStrings;
+
+  @override
+  void initState() {
+    localeStrings =
+        AppLocales.instance().checkoutSnippet(widget.lang).values.toList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final installmentPrice =
+        getPrice(price: widget.price, currency: widget.currency);
+    final amountText = '${widget.currency.displayName} $installmentPrice';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            localeStrings[0],
+            style: TextStyle(
+              fontSize: 14,
+              color: dividerColor,
+            ),
+          ),
+        ),
+        gap,
+        gap,
+        Row(
+          children: [
+            CheckoutSnippetCell(
+              position: 1,
+              localeStrings: localeStrings,
+              amountText: amountText,
+            ),
+            CheckoutSnippetCell(
+              position: 2,
+              localeStrings: localeStrings,
+              amountText: amountText,
+            ),
+            CheckoutSnippetCell(
+              position: 3,
+              localeStrings: localeStrings,
+              amountText: amountText,
+            ),
+            CheckoutSnippetCell(
+              position: 4,
+              localeStrings: localeStrings,
+              amountText: amountText,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class CheckoutSnippetCell extends StatelessWidget {
+  const CheckoutSnippetCell({
+    required this.position,
+    required this.localeStrings,
+    required this.amountText,
+    Key? key,
+  }) : super(key: key);
+
+  final List<String> localeStrings;
+  final String amountText;
+  final int position;
+
+  @override
+  Widget build(BuildContext context) {
+    final isFirst = position == 1;
+    final isLast = position == 4;
+    return Expanded(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: isFirst
+                    ? const SizedBox.shrink()
+                    : Container(
+                        height: 1,
+                        color: dividerColor,
+                      ),
+              ),
+              CheckoutSnippetImage(position: position),
+              Expanded(
+                child: isLast
+                    ? const SizedBox.shrink()
+                    : Container(
+                        height: 1,
+                        color: dividerColor,
+                      ),
+              ),
+            ],
+          ),
+          gap,
+          CheckoutWhenText(position: position, localeStrings: localeStrings),
+          gap,
+          CheckoutSnippetAmountText(amount: amountText),
+        ],
+      ),
+    );
+  }
+}
+
+class CheckoutWhenText extends StatelessWidget {
+  const CheckoutWhenText({
+    required this.position,
+    required this.localeStrings,
+    Key? key,
+  }) : super(key: key);
+
+  final List<String> localeStrings;
+  final int position;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      localeStrings[position],
+      style: const TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
+class CheckoutSnippetImage extends StatelessWidget {
+  const CheckoutSnippetImage({
+    required this.position,
+    Key? key,
+  }) : super(key: key);
+
+  final int position;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: Image(
+        image: AssetImage(
+          'assets/images/r$position.png',
+          package: 'tabby_flutter_inapp_sdk',
+        ),
+        width: 40,
+        height: 40,
+      ),
+    );
+  }
+}
+
+class CheckoutSnippetAmountText extends StatelessWidget {
+  const CheckoutSnippetAmountText({
+    required this.amount,
+    Key? key,
+  }) : super(key: key);
+  final String amount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      amount,
+      style: TextStyle(
+        fontSize: 11,
+        color: dividerColor,
+      ),
+    );
+  }
+}
+
+const checkoutSnippetLocalesEn = {
+  'useAnyCard': 'Use any card.',
+  'today': 'Today',
+  'in1Month': 'In 1 month',
+  'in2Months': 'In 2 months',
+  'in3Months': 'In 3 months',
+};
+
+const checkoutSnippetLocalesAr = {
+  'useAnyCard': 'استخدم أي بطاقة.',
+  'today': 'اليوم',
+  'in1Month': 'بعد شهر',
+  'in2Months': 'بعد شهرين',
+  'in3Months': 'بعد ثلاثة أشهر',
+};
+
+class AppLocales {
+  AppLocales._();
+
+  /// Provides instance [AppLocales].
+  factory AppLocales.instance() => _instance;
+
+  static final AppLocales _instance = AppLocales._();
+
+  Map<String, String> checkoutSnippet(Lang lang) {
+    switch (lang) {
+      case Lang.en:
+        return checkoutSnippetLocalesEn;
+      default:
+        return checkoutSnippetLocalesAr;
+    }
   }
 }

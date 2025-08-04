@@ -88,6 +88,7 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
 
                 // Pay Now Button
                 UniPayDesignSystem.primaryButton(
+                  backgroundColor: Theme.of(context).primaryColor,
                   isBottomBarButton: true,
                   isDisabled: uniPayPaymentMethods.isNotSpecified,
                   title:

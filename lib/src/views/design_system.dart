@@ -20,18 +20,18 @@ class UniPayDesignSystem {
         elevation: 0,
         leading: leading ??
             BackButton(
-              color: UniPayColorsPalletes.black,
+              color: UniPayColorsPalletes.white.withAlpha(100),
               onPressed: () => UniPayControllers.context.uniPop(),
             ),
         flexibleSpace: GlassMorphism(
           sigmaVal: 5,
           child: Container(color: UniPayColorsPalletes.transparent),
         ),
-        backgroundColor: UniPayColorsPalletes.white.withAlpha(100),
+        backgroundColor: Theme.of(UniPayControllers.context).primaryColor,
         title: Text(
           title,
           style: UniPayTheme.uniPayStyle.copyWith(
-            color: UniPayColorsPalletes.black,
+            color: UniPayColorsPalletes.white,
             fontWeight: FontWeight.bold,
             fontSize: 16.rSp,
           ),

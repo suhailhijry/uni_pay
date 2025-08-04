@@ -17,10 +17,13 @@ class UniPay extends StatefulWidget {
   ///* Uni Pay Data to be used for payment request
   final UniPayData uniPayData;
 
+  final ThemeData? theme;
+
   const UniPay({
     Key? key,
     required this.context,
     required this.uniPayData,
+    this.theme,
   }) : super(key: key);
 
   @override
@@ -43,7 +46,7 @@ class _UniPayState extends State<UniPay> {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: LocalizationsData.localizationsDelegate,
       supportedLocales: LocalizationsData.supportLocale,
-      theme: UniPayTheme.theme,
+      theme: widget.theme ?? UniPayTheme.theme,
       locale: uniPayData.locale.currentLocale,
       home: const UniPayViewHandler(),
     );

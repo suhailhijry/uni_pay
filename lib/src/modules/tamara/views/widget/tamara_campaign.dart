@@ -35,7 +35,7 @@ class TamaraCampaign extends StatelessWidget {
         width: 100.w,
         padding: EdgeInsets.all(10.rSp),
         decoration: BoxDecoration(
-          border: Border.all(color: UniPayColorsPalletes.black.withOpacity(.1)),
+          border: Border.all(color: Theme.of(context).primaryColor.withValues(alpha: 25.5)),
           borderRadius: 10.br,
         ),
         child: Row(
@@ -58,7 +58,7 @@ class TamaraCampaign extends StatelessWidget {
                                   campaign.transactionAmount.bnplSplitBy3),
                               style: UniPayTheme.uniPayStyle.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: UniPayColorsPalletes.black,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                             TextSpan(
@@ -69,7 +69,7 @@ class TamaraCampaign extends StatelessWidget {
                               style: UniPayTheme.uniPayStyle.copyWith(
                                 fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.underline,
-                                color: UniPayColorsPalletes.black,
+                                color: Theme.of(context).primaryColor,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => _openTamaraPaymentDialog(),
