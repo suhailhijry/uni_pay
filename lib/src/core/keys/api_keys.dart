@@ -34,6 +34,7 @@ class ApiKeys {
       amount: UniPayControllers
           .uniPayData.orderInfo.transactionAmount.totalAmount.amountInHalala,
       description: uniPayData.orderInfo.description,
+      creditCard: CreditCardConfig(saveCard: true, manual: false),
       applePay: ApplePayConfig(
         manual: false,
         saveCard: true,
