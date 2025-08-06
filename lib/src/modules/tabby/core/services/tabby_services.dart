@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabby_flutter_inapp_sdk/src/resources/colors.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 import 'package:uni_pay/src/utils/utils.dart';
@@ -18,8 +19,6 @@ import '../../../../core/controllers/uni_pay_controller.dart';
 import '../models/tabby_session.dart';
 import '../models/tabby_trxn.dart';
 import 'tabby_repo.dart';
-import 'package:tabby_flutter_inapp_sdk/src/resources/colors.dart';
-
 
 final _tabbyRepo = TabbyRepo();
 
@@ -39,7 +38,9 @@ class UniTabbyServices {
       _tabbySdk = TabbySDK();
       _tabbySdk?.setup(
         withApiKey: _tabbyCredential!.psKey,
-        environment: Environment.staging,
+        environment: uniPayData.environment.isProduction
+            ? Environment.production
+            : Environment.staging,
       );
     }
   }

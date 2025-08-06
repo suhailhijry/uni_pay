@@ -36,7 +36,9 @@ class _UniPayTabbyState extends State<UniPayTabby> {
           final tabbySession = UniPayControllers.tabbySession;
           if (status.isLoading) {
             return UniPayDesignSystem.loadingIndicator();
-          } else if (status.isSuccess && tabbySession != null) {
+          } else if (status.isSuccess &&
+              tabbySession != null &&
+              tabbySession.isPreScorePassed == true) {
             return TabbyWebView(
               webUrl: tabbySession.availableProducts.installments?.webUrl ?? "",
               onResult: (WebViewResult resultCode) {

@@ -103,7 +103,7 @@ class UniPayControllers {
     tabbyNotifier.value = UniPayCurrentState.loading;
 
     // Create Tabby session
-    tabbySession = await UniTabbyServices.createTabbySession(uniPayData);
+    tabbySession = await UniTabbyServices.checkPreScoreSession(uniPayData);
     tabbyNotifier.value = tabbySession != null
         ? UniPayCurrentState.success
         : UniPayCurrentState.failed;
