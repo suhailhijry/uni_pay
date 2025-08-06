@@ -34,13 +34,10 @@ class UniTabbyServices {
     if (uniPayData.credentials.paymentMethods.isTabbyGateway &&
         _tabbySdk == null) {
       _tabbyCredential = uniPayData.credentials.tabbyCredential!;
-      uniLog(_tabbyCredential!.psKey);
       _tabbySdk = TabbySDK();
       _tabbySdk?.setup(
-        withApiKey: _tabbyCredential!.psKey,
-        environment: uniPayData.environment.isProduction
-            ? Environment.production
-            : Environment.staging,
+        withApiKey: _tabbyCredential!.secretKey,
+        environment: Environment.production,
       );
     }
   }
