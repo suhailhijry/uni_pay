@@ -45,19 +45,25 @@ class _UniPayTabbyState extends State<UniPayTabby> {
                 // Case 1: Payment success
                 if (resultCode == WebViewResult.authorized) {
                   UniTabbyServices.processTabbyPayment(
-                      context, UniPayStatus.success,
-                      transactionId: tabbySession.paymentId);
+                    context,
+                    UniPayStatus.success,
+                    transactionId: tabbySession.paymentId,
+                  );
                 }
                 // Case 2: Payment canceled
                 else if (resultCode == WebViewResult.close ||
                     resultCode == WebViewResult.rejected) {
                   UniTabbyServices.processTabbyPayment(
-                      context, UniPayStatus.cancelled);
+                    context,
+                    UniPayStatus.cancelled,
+                  );
                 }
                 // Case 3: Payment failed
                 else {
                   UniTabbyServices.processTabbyPayment(
-                      context, UniPayStatus.failed);
+                    context,
+                    UniPayStatus.failed,
+                  );
                 }
               },
             );

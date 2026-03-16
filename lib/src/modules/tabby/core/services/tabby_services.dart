@@ -154,6 +154,15 @@ class UniTabbyServices {
     if (status.isSuccess) {
       response.transactionId = transactionId ??
           "TABBY_TRXN_${UniPayControllers.uniPayData.orderInfo.orderId}}";
+      response.amount =
+          UniPayControllers.uniPayData.orderInfo.transactionAmount.totalAmount;
+      captureTabbyPayment(
+          tabbyDto: TabbyDto(
+        transactionId: response.transactionId,
+        amount: UniPayControllers
+            .uniPayData.orderInfo.transactionAmount.totalAmount,
+        credential: UniPayControllers.uniPayData.credentials.tabbyCredential!,
+      ));
     }
     return UniPayControllers.handlePaymentsResponseAndCallback(context,
         response: response);

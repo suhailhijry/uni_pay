@@ -20,6 +20,7 @@ class ApiKeys {
   static const String failedUrl = "$uniBaseURl/failed";
   static const String cancelUrl = "$uniBaseURl/cancelled";
   static String approved = "approved";
+
   static String get tamaraCheckoutUrl => "$tamaraBaseUrl/checkout";
 
   static Map<String, String> get tamaraHeaders => UniPayControllers
@@ -63,7 +64,7 @@ class ApiKeys {
 
   ///  ------------ Tabby ---------------- ///
   /// Get the tabby base Url
-  static String tabbyBaseUrl = "https://api.tabby.ai/api/v1";
+  static String tabbyBaseUrl = "https://api.tabby.sa/api/v2";
 
   /// Get the tabby payments Url
   static String tabbyPaymentsUrl = "$tabbyBaseUrl/payments";
