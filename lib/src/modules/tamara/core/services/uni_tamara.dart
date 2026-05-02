@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http_client;
 import 'package:uni_pay/src/constant/uni_text.dart';
 import 'package:uni_pay/src/core/keys/api_keys.dart';
 import 'package:uni_pay/src/modules/tamara/core/models/tamara_callback.dart';
@@ -11,10 +12,9 @@ import 'package:uni_pay/uni_pay.dart';
 
 import '../../../../core/controllers/uni_pay_controller.dart';
 
-import 'package:http/http.dart' as http_client;
-
 class UniTamara {
   UniTamara._();
+
   static ValueNotifier<UniPayCurrentState> currentStateNotifier =
       ValueNotifier(UniPayCurrentState.loading);
 
@@ -30,7 +30,7 @@ class UniTamara {
         currency: order.transactionAmount.currency.currencyCode,
       ),
       description: order.description,
-      countryCode: uniPayData.customerInfo.address.country.countryCode,
+      countryCode: "SA",
       locale: uniPayData.locale.localeCode,
       items: order.items
           .map((item) => Items(
@@ -49,14 +49,14 @@ class UniTamara {
         firstName: customer.fullName.firstName,
         lastName: customer.fullName.lastName,
         phoneNumber: customer.phoneNumber,
-        email: customer.email,
+        email: customer.email ?? "",
       ),
       shippingAddress: ShippingAddress(
         firstName: customer.fullName.firstName,
         lastName: customer.fullName.lastName,
-        line1: customer.address.addressName,
-        city: customer.address.city,
-        countryCode: customer.address.country.countryCode,
+        line1: customer.address?.addressName ?? "",
+        city: customer.address?.city ?? "",
+        countryCode: customer.address?.country.countryCode ?? "",
       ),
       taxAmount: TaxAmount(
         amount: order.transactionAmount.totalAmount.vat.formattedString,
@@ -113,6 +113,8 @@ class UniTamara {
     if (status.isSuccess) {
       response.transactionId = transactionId ??
           "TAMARA_TRXN_${UniPayControllers.uniPayData.orderInfo.orderId}}";
+      response.amount =
+          UniPayControllers.uniPayData.orderInfo.transactionAmount.totalAmount;
     }
     UniPayControllers.handlePaymentsResponseAndCallback(context,
         response: response);

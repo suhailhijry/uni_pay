@@ -121,9 +121,9 @@ class TabbyTransaction {
         'email': customer?.email,
         'phone': customer?.phoneNumber,
         'shipping_address': {
-          'address': customer?.address.addressName,
-          'city': customer?.address.city,
-          'zip': customer?.address.zipCode,
+          'address': customer?.address?.addressName,
+          'city': customer?.address?.city,
+          'zip': customer?.address?.zipCode,
         },
       },
     };

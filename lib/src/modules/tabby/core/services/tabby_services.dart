@@ -89,7 +89,7 @@ class UniTabbyServices {
             // '0500000001'
             // 'otp.rejected@tabby.ai',
             // '0500000002'
-            email: customer.email,
+            email: customer.email ?? "",
             phone: customer.phoneNumber,
             name: customer.fullName,
           ),
@@ -122,9 +122,9 @@ class UniTabbyServices {
             // )
           ],
           shippingAddress: ShippingAddress(
-            city: customer.address.city,
-            address: customer.address.addressName,
-            zip: customer.address.zipCode,
+            city: customer.address?.city ?? '',
+            address: customer.address?.addressName ?? '',
+            zip: customer.address?.zipCode ?? '',
           ),
         ),
       );
@@ -156,13 +156,6 @@ class UniTabbyServices {
           "TABBY_TRXN_${UniPayControllers.uniPayData.orderInfo.orderId}}";
       response.amount =
           UniPayControllers.uniPayData.orderInfo.transactionAmount.totalAmount;
-      captureTabbyPayment(
-          tabbyDto: TabbyDto(
-        transactionId: response.transactionId,
-        amount: UniPayControllers
-            .uniPayData.orderInfo.transactionAmount.totalAmount,
-        credential: UniPayControllers.uniPayData.credentials.tabbyCredential!,
-      ));
     }
     return UniPayControllers.handlePaymentsResponseAndCallback(context,
         response: response);

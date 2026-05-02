@@ -8,10 +8,10 @@ class UniPayCustomerInfo {
   late String phoneNumber;
 
   ///* Customer email
-  late String email;
+  String? email;
 
   ///* Customer address
-  late UniPayAddress address;
+  UniPayAddress? address;
 
   ///* Customer joined date
   late DateTime joinedAtDate;
@@ -20,7 +20,7 @@ class UniPayCustomerInfo {
     required this.fullName,
     required this.phoneNumber,
     this.email = "",
-    required this.address,
+    this.address,
     DateTime? joinedAtDate,
   }) : joinedAtDate = joinedAtDate ?? DateTime.now();
 
@@ -36,7 +36,7 @@ class UniPayCustomerInfo {
     data['fullName'] = fullName;
     data['phone_number'] = phoneNumber;
     data['email'] = email;
-    data['address'] = address.toJson();
+    data['address'] = address?.toJson();
     return data;
   }
 
