@@ -233,10 +233,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: fe7ab022b76f3034adc518fb6ea04a82387620e19977665ea18d30a1cf43442f
+      sha256: "87721a4a50b19c7f1d49001e51409bddc46303966ce89a65af4f4e6004896412"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.6.0"
   http_parser:
     dependency: transitive
     description:
@@ -401,10 +401,10 @@ packages:
     dependency: transitive
     description:
       name: moyasar
-      sha256: "74c822f0318580027140f17846c8a2c83ebfd0d1ee1fb148df87dc8cb4237a2d"
+      sha256: "535b13e00110159a6a222e490fc29e813f3ae83459cf135b2b9e0cb24a58a9ad"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.14"
+    version: "3.0.2"
   path:
     dependency: transitive
     description:
@@ -465,18 +465,18 @@ packages:
     dependency: transitive
     description:
       name: pay
-      sha256: a153230b83ec6720e4dd2766a6b291dda852bfbc99a9e1be9689a8d7fa150970
+      sha256: e012871f065c188e4c275e30b0000c174f6df99101ef137f9cc52ed13fad80e8
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.3.0"
   pay_android:
     dependency: transitive
     description:
       name: pay_android
-      sha256: "561e579f23e67da5299be0758831db9355315d92ba7c3b1904a9b20f905183ca"
+      sha256: "27dab62d564290aea584b6b39dbbda390b935d6d7296b54bc28de65579bfb049"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.2.0"
   pay_ios:
     dependency: transitive
     description:
@@ -693,10 +693,10 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter
-      sha256: "889a0a678e7c793c308c68739996227c9661590605e70b1f6cf6b9a6634f7aec"
+      sha256: a3da219916aba44947d3a5478b1927876a09781174b5a2b67fa5be0555154bf9
       url: "https://pub.dev"
     source: hosted
-    version: "4.10.0"
+    version: "4.13.1"
   webview_flutter_android:
     dependency: transitive
     description:
@@ -746,5 +746,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.7.0-0 <4.0.0"
-  flutter: ">=3.27.0"
+  dart: ">=3.8.0 <4.0.0"
+  flutter: ">=3.32.0"

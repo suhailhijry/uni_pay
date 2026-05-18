@@ -28,10 +28,10 @@ dependencies:
     sdk: flutter
 
   #* Netowrk and http calls
-  http: ^1.2.0
+  http: ^1.6.0
 
   #* Moyasar payment gateway
-  moyasar: ^2.0.13
+  moyasar: ^3.0.2
 
   #* UI and UX related
   lottie: ^3.1.2
