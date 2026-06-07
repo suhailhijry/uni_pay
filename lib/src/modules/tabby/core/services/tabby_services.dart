@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabby_flutter_inapp_sdk/src/resources/colors.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import 'package:uni_pay/src/core/models/uni_order_history.dart';
 import 'package:uni_pay/src/utils/extension.dart';
 import 'package:uni_pay/src/utils/utils.dart';
 import 'package:uni_pay/uni_pay.dart'
@@ -94,9 +95,10 @@ class UniTabbyServices {
             name: customer.fullName,
           ),
           buyerHistory: BuyerHistory(
-            loyaltyLevel: 0,
+            loyaltyLevel: customer.successfulPastOrders,
             registeredSince: customer.joinedAtDate.toUtc().toIso8601String(),
             wishlistCount: 0,
+            isPhoneNumberVerified: true,
           ),
           order: Order(
             referenceId: order.orderId,
@@ -113,14 +115,21 @@ class UniTabbyServices {
                 )
                 .toList(),
           ),
-          orderHistory: [
-            // OrderHistoryItem(
-            //   purchasedAt: DateTime.now().toUtc().toIso8601String(),
-            //   amount: order.transactionAmount.totalAmount.formattedString,
-            //   paymentMethod: OrderHistoryItemPaymentMethod.card,
-            //   status: OrderHistoryItemStatus.newOne,
-            // )
-          ],
+          orderHistory: customer.history.map((v) {
+            return OrderHistoryItem(
+              amount: v.transactionAmount.totalAmount.formattedString,
+              status: switch (v.status) {
+                OrderStatus.unknown => OrderHistoryItemStatus.unknown,
+                OrderStatus.newOne => OrderHistoryItemStatus.newOne,
+                OrderStatus.processing => OrderHistoryItemStatus.processing,
+                OrderStatus.complete => OrderHistoryItemStatus.complete,
+                OrderStatus.refunded => OrderHistoryItemStatus.refunded,
+                OrderStatus.canceled => OrderHistoryItemStatus.canceled,
+              },
+              paymentMethod: OrderHistoryItemPaymentMethod.card,
+              purchasedAt: v.orderedAt.toIso8601String(),
+            );
+          }).toList(),
           shippingAddress: ShippingAddress(
             city: customer.address?.city ?? '',
             address: customer.address?.addressName ?? '',

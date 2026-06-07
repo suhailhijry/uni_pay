@@ -47,11 +47,16 @@ class UniPaymentOptionWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //* Checkbox
-              UniPayDesignSystem.checkBox(
-                activeColor: activeColor ?? UniPayColorsPalletes.black,
-                status: currentStatus,
-                onChange: onChange,
-              ),
+              onChange == null
+                  ? const SizedBox(
+                      width: 32,
+                      height: 32,
+                    )
+                  : UniPayDesignSystem.checkBox(
+                      activeColor: activeColor ?? UniPayColorsPalletes.black,
+                      status: currentStatus,
+                      onChange: onChange,
+                    ),
               5.hs,
               //* Title and subtitle
               Expanded(

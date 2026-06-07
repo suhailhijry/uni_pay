@@ -122,7 +122,31 @@ enum UniPayCurrency {
   }
 }
 
-enum UniPayItemType { product, service, notSpecified }
+enum UniPayItemType {
+  product,
+  service,
+  massageService,
+  massagePackage,
+  membership,
+  notSpecified;
+
+  String get name {
+    switch (this) {
+      case product:
+        return "Product";
+      case UniPayItemType.service:
+        return "Service";
+      case UniPayItemType.massageService:
+        return "Massage service";
+      case UniPayItemType.massagePackage:
+        return "Massage package";
+      case UniPayItemType.membership:
+        return "Membership";
+      case UniPayItemType.notSpecified:
+        return "Not specified";
+    }
+  }
+}
 
 enum UniPayEnvironment {
   production,

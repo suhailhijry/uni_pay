@@ -4,9 +4,9 @@ import 'package:uni_pay/src/views/widgets/uni_pay_view_handler.dart';
 import 'package:uni_pay/uni_pay.dart';
 
 import '../constant/locale.dart';
-
 import '../core/controllers/uni_pay_controller.dart';
 import '../theme/colors.dart';
+import 'design_system.dart';
 
 final uniStateKey = GlobalKey<NavigatorState>();
 
@@ -35,6 +35,11 @@ class _UniPayState extends State<UniPay> {
   void initState() {
     super.initState();
     UniPayControllers.setUniPayData(widget.uniPayData, widget.context);
+    if (widget.uniPayData.credentials.tabbyCredential != null) {
+      UniPayControllers.initTabbyCheckoutSession().then((v) {
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -48,7 +53,10 @@ class _UniPayState extends State<UniPay> {
       supportedLocales: LocalizationsData.supportLocale,
       theme: widget.theme ?? UniPayTheme.theme,
       locale: uniPayData.locale.currentLocale,
-      home: const UniPayViewHandler(),
+      home: widget.uniPayData.credentials.tabbyCredential != null &&
+              UniPayControllers.tabbySession == null
+          ? Scaffold(body: UniPayDesignSystem.loadingIndicator())
+          : const UniPayViewHandler(),
     );
   }
 }

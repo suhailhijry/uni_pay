@@ -15,6 +15,7 @@ class UniPayText {
   static String get payNow => isEnglish ? "Pay Now" : "ادفع الآن";
 
   static String get checkout => isEnglish ? "Checkout" : "الدفع";
+
   static String get paymentStatus =>
       isEnglish ? "Payment Status" : "حالة الدفع";
 
@@ -23,6 +24,9 @@ class UniPayText {
 
   static String get checkoutByTabby =>
       isEnglish ? "Checkout by Tabby" : "الدفع عبر تابي";
+
+  static String get useAnyCard =>
+      isEnglish ? "Use any card" : "استخدم أي بطاقة";
 
   static String get tabbyErrorMsg => isEnglish
       ? "Your payment request has been declined by Tabby, kindly try again later."
@@ -56,7 +60,7 @@ class UniPayText {
 
   ///* Tabby ----------
   static String get tabbySplitBill =>
-      isEnglish ? "Tabby: Pay in 4 installments" : "تابي: ادفع على 4 دفعات";
+      isEnglish ? "Pay later with Tabby" : "ادفع لاحقًا عبر تابي";
 
   ///* Card
 
@@ -87,4 +91,21 @@ class UniPayText {
   static String get tamaraCheckoutTitle => isEnglish
       ? "Split in 3 payments - No late fees, Sharia compliant"
       : "قسمها على 3 دفعات - بدون رسوم تأخير، متوافقة مع الشريعة الإسلامية";
+
+  static String tabbyRejectionTranslation(String reason) {
+    return switch (reason) {
+      "not_available" => isEnglish
+          ? "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order."
+          : "نأسف، تابي غير قادرة على الموافقة على هذه العملية. الرجاء استخدام طريقة دفع أخرى.",
+      "order_amount_too_high" => isEnglish
+          ? "This purchase is above your current spending limit with Tabby, try a smaller cart or use another payment method"
+          : "قيمة الطلب تفوق الحد الأقصى المسموح به حاليًا مع تابي. يُرجى تخفيض قيمة السلة أو استخدام وسيلة دفع أخرى.",
+      "order_amount_too_low" => isEnglish
+          ? "The purchase amount is below the minimum amount required to use Tabby, try adding more items or use another payment method"
+          : "قيمة الطلب أقل من الحد الأدنى المطلوب لاستخدام خدمة تابي. يُرجى زيادة قيمة الطلب أو استخدام وسيلة دفع أخرى.",
+      String() => isEnglish
+          ? "Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order."
+          : "نأسف، تابي غير قادرة على الموافقة على هذه العملية. الرجاء استخدام طريقة دفع أخرى.",
+    };
+  }
 }

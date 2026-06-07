@@ -22,14 +22,14 @@ class UniPayTabby extends StatefulWidget {
 class _UniPayTabbyState extends State<UniPayTabby> {
   @override
   void initState() {
-    UniPayControllers.initTabbyCheckoutSession();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UniPayDesignSystem.appBar(title: UniPayText.checkoutByTabby),
+      appBar: UniPayDesignSystem.appBar(
+          title: UniPayText.checkoutByTabby, leading: const SizedBox()),
       body: ValueListenableBuilder(
         valueListenable: UniPayControllers.tabbyNotifier,
         builder: (_, status, __) {

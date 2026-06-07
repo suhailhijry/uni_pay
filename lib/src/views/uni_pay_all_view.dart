@@ -3,9 +3,9 @@ import 'package:uni_pay/src/utils/extension.dart';
 
 import '../../uni_pay.dart';
 import '../constant/uni_text.dart';
+import '../core/controllers/uni_pay_controller.dart';
 import '../modules/moyasar/views/moyasar_card_widget.dart';
 import '../modules/moyasar/views/uni_pay_moyasar_view.dart';
-import '../core/controllers/uni_pay_controller.dart';
 import 'design_system.dart';
 
 class UniPayGatewayView extends StatefulWidget {
@@ -74,6 +74,7 @@ class _UniPayGatewayViewState extends State<UniPayGatewayView> {
                 if (paymentMethods.isTabbyGateway) ...[
                   const Divider(),
                   TabbySplitPlanWidget(
+                    tabbySession: UniPayControllers.tabbySession!,
                     widgetData: WidgetData(
                       currentStatus: uniPayPaymentMethods.isTabby,
                       locale: UniPayControllers.uniPayData.locale,
