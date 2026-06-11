@@ -14,7 +14,7 @@ class TamaraData {
   late ShippingAddress shippingAddress;
   late TaxAmount taxAmount;
   late ShippingAmount shippingAmount;
-  late MerchantUrl merchantUrl;
+  late MerchantUrl? merchantUrl;
   Map<String, dynamic>? additionalData;
 
   TamaraData({
@@ -29,7 +29,7 @@ class TamaraData {
     required this.shippingAddress,
     required this.taxAmount,
     required this.shippingAmount,
-    required this.merchantUrl,
+    this.merchantUrl,
     this.additionalData,
   });
 
@@ -62,7 +62,7 @@ class TamaraData {
     data['shipping_address'] = shippingAddress.toJson();
     data['tax_amount'] = taxAmount.toJson();
     data['shipping_amount'] = shippingAmount.toJson();
-    data['merchant_url'] = merchantUrl.toJson();
+    data['merchant_url'] = merchantUrl?.toJson();
     if (additionalData != null) data['additional_data'] = additionalData;
     return data;
   }
@@ -71,6 +71,7 @@ class TamaraData {
 class TotalAmount {
   late final num amount;
   String currency = "SAR";
+
   TotalAmount({
     required this.amount,
     this.currency = "SAR",
@@ -96,6 +97,7 @@ class Items {
   late String sku;
   late int quantity;
   late TotalAmount totalAmount;
+
   Items({
     required this.referenceId,
     required this.type,
@@ -131,6 +133,7 @@ class ConsumerModel {
   late String lastName;
   late String phoneNumber;
   late String email;
+
   ConsumerModel({
     required this.firstName,
     required this.lastName,
@@ -161,6 +164,7 @@ class ShippingAddress {
   late String line1;
   late String city;
   late String countryCode;
+
   ShippingAddress({
     required this.firstName,
     required this.lastName,
@@ -191,6 +195,7 @@ class ShippingAddress {
 class TaxAmount {
   late String amount;
   String currency = "SAR";
+
   TaxAmount({
     required this.amount,
     this.currency = "SAR",

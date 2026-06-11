@@ -44,9 +44,9 @@ class _UniPayTamaraState extends State<UniPayTamara> {
             return TamaraCheckoutView(
               tamaraUrls: TamaraUrls(
                 checkoutUrl: tamaraCheckout.checkoutUrl,
-                successUrl: merchantUrls.success,
-                failedUrl: merchantUrls.failure,
-                cancelUrl: merchantUrls.cancel,
+                successUrl: merchantUrls?.success,
+                failedUrl: merchantUrls?.failure,
+                cancelUrl: merchantUrls?.cancel,
                 authoriseOrder: tamaraCredential.authoriseOrder,
                 captureOrder: tamaraCredential.captureOrder,
               ),

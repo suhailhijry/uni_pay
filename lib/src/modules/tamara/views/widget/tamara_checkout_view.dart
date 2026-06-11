@@ -14,6 +14,7 @@ class TamaraCheckoutView extends StatefulWidget {
   final ValueChanged<TamaraCallBackResponse> onPaymentSuccess;
   final VoidCallback onPaymentFailed;
   final VoidCallback onPaymentCanceled;
+
   const TamaraCheckoutView(
       {Key? key,
       required this.tamaraUrls,
@@ -39,7 +40,8 @@ class _TamaraCheckoutViewState extends State<TamaraCheckoutView> {
           InAppWebView(
             key: _viewKey,
             initialOptions: ApiKeys.webViewGroupOptions,
-            initialUrlRequest: URLRequest(url: WebUri(tamaraUrls.checkoutUrl)),
+            initialUrlRequest:
+                URLRequest(url: WebUri(tamaraUrls.checkoutUrl ?? '_blank')),
             shouldOverrideUrlLoading: (controller, action) async {
               inAppViewController = controller;
               String? currentLoadedUrl = action.request.url?.toString();
@@ -48,7 +50,8 @@ class _TamaraCheckoutViewState extends State<TamaraCheckoutView> {
                   NavigationActionPolicy.ALLOW;
               if (currentLoadedUrl != null) {
                 //* Success
-                if (currentLoadedUrl.startsWith(tamaraUrls.successUrl)) {
+                if (currentLoadedUrl
+                    .startsWith(tamaraUrls.successUrl ?? '_blank')) {
                   actionPolicy = NavigationActionPolicy.CANCEL;
                   TamaraCallBackResponse tamaraCallBackResponse =
                       TamaraCallBackResponse.fromMap(
@@ -69,12 +72,14 @@ class _TamaraCheckoutViewState extends State<TamaraCheckoutView> {
                   }
                 }
                 //* Failed
-                else if (currentLoadedUrl.startsWith(tamaraUrls.failedUrl)) {
+                else if (currentLoadedUrl
+                    .startsWith(tamaraUrls.failedUrl ?? '_blank')) {
                   actionPolicy = NavigationActionPolicy.CANCEL;
                   widget.onPaymentFailed.call();
                 }
                 //* Cancelled
-                else if (currentLoadedUrl.startsWith(tamaraUrls.cancelUrl)) {
+                else if (currentLoadedUrl
+                    .startsWith(tamaraUrls.cancelUrl ?? '_blank')) {
                   actionPolicy = NavigationActionPolicy.CANCEL;
                   widget.onPaymentCanceled.call();
                 }

@@ -9,8 +9,8 @@ class UniPayText {
       : "حدث خطأ ما ، يرجى المحاولة مرة أخرى في وقت لاحق";
 
   static String get payByTamara => isEnglish
-      ? "Tamara: Split your bill into 3 interest-free installments."
-      : "تمارا: قسم فاتورتك على 3 دفعات بدون فوائد";
+      ? "Tamara: Split your bill into 4 interest-free installments."
+      : "تمارا: قسم فاتورتك على 4 دفعات بدون فوائد";
 
   static String get payNow => isEnglish ? "Pay Now" : "ادفع الآن";
 

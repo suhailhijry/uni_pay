@@ -96,7 +96,7 @@ class TamaraCredential {
   late String token;
 
   ///* Merchant `Urls` for Tamara
-  late MerchantUrl merchantUrl;
+  late MerchantUrl? merchantUrl;
 
   ///* If `true` it authorise the payment automatically after successful payment
   late bool authoriseOrder;
@@ -106,7 +106,7 @@ class TamaraCredential {
 
   TamaraCredential({
     required this.token,
-    required this.merchantUrl,
+    this.merchantUrl,
     this.authoriseOrder = true,
     this.captureOrder = false,
   });
@@ -121,7 +121,7 @@ class TamaraCredential {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['token'] = token;
-    data['merchantUrl'] = merchantUrl.toJson();
+    data['merchantUrl'] = merchantUrl?.toJson();
     data['authoriseOrder'] = authoriseOrder;
     data['captureOrder'] = captureOrder;
     return data;
@@ -132,13 +132,13 @@ class MerchantUrl {
   late String success;
   late String failure;
   late String cancel;
-  late String notification;
+  late String? notification;
 
   MerchantUrl({
     this.success = ApiKeys.successUrl,
     this.failure = ApiKeys.failedUrl,
     this.cancel = ApiKeys.cancelUrl,
-    required this.notification,
+    this.notification,
   });
 
   MerchantUrl.fromJson(Map<String, dynamic> json) {
