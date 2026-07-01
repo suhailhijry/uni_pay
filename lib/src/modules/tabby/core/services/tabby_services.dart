@@ -128,12 +128,17 @@ class UniTabbyServices {
               },
               paymentMethod: OrderHistoryItemPaymentMethod.card,
               purchasedAt: v.orderedAt.toIso8601String(),
+              buyer: Buyer(
+                email: customer.email ?? '',
+                phone: customer.phoneNumber,
+                name: customer.fullName,
+              ),
             );
           }).toList(),
           shippingAddress: ShippingAddress(
-            city: customer.address?.city ?? '',
-            address: customer.address?.addressName ?? '',
-            zip: customer.address?.zipCode ?? '',
+            city: customer.address.city,
+            address: customer.address.addressName,
+            zip: customer.address.zipCode,
           ),
         ),
       );
